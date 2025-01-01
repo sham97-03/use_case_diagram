@@ -1,0 +1,87 @@
+@startuml use_case_diagram_health_system
+
+left to right direction
+
+actor Patient as P
+actor Receptionist as R
+actor Doctor as D
+actor Nurse as N
+actor "Lab Technician" as LT
+actor Pharmacist as PH
+actor Administration as A
+
+package "Health Automation System" {
+
+    usecase "Login or Create Account" as UC1
+
+    usecase "Patient Registration" as UC2
+    usecase "Choose Hospital" as UC2_1
+    usecase "Input Patient Data" as UC2_2
+    usecase "Submit Registration Request" as UC2_3
+
+    usecase "Process Registration Request" as UC2_4
+    usecase "Search for Medical Record" as UC2_4_1
+    usecase "Create New Record" as UC2_4_2
+
+    usecase "Determine Path" as UC2_4_3
+        usecase "Assign Inpatient" as UC2_4_3_1
+        usecase "Direct to Outpatient Department" as UC2_4_3_2
+        usecase "Schedule Appointment" as UC2_4_3_3
+
+    usecase "Reject Request" as UC2_4_4
+
+    usecase "Inpatient Management" as UC_Inpatient
+        usecase "Assign Room" as UC_Inpatient_1
+        usecase "Provide Routine Care" as UC_Inpatient_2
+        usecase "Prepare for Surgery or ICU" as UC_Inpatient_3
+        usecase "Discharge Patient" as UC_Inpatient_4
+        usecase "Update Medical Record" as UC_Inpatient_5
+
+    usecase "Outpatient Services" as UC_Outpatient
+        usecase "Direct to Emergency" as UC_Outpatient_1
+        usecase "Direct to Clinics" as UC_Outpatient_2
+        usecase "Direct to Labs or Pharmacy" as UC_Outpatient_3
+        usecase "Update Medical Record" as UC_Outpatient_4
+
+    usecase "Appointment Management" as UC_Appointment
+        usecase "Notify Patient" as UC_Appointment_1
+        usecase "Accept Appointment" as UC_Appointment_2
+        usecase "Reschedule Appointment" as UC_Appointment_3
+        usecase "Cancel Appointment" as UC_Appointment_4
+}
+
+P --> UC1
+P --> UC2
+UC2 <include> UC2_1
+UC2 <include> UC2_2
+UC2 <include> UC2_3
+UC2 --> UC2_4
+UC2_4 <include> UC2_4_1
+UC2_4_1 <include> UC2_4_2
+UC2_4_2 <include> UC2_4_3
+UC2_4_3 <include> UC2_4_3_1
+UC2_4_3 <include> UC2_4_3_2
+UC2_4_3 <include> UC2_4_3_3
+UC2_4 <extend> UC2_4_4
+
+UC2_4_3_1 <include> UC_Inpatient
+UC2_4_3_2 <include> UC_Outpatient
+UC2_4_3_3 <include> UC_Appointment
+
+UC_Inpatient <include> UC_Inpatient_1
+UC_Inpatient <include> UC_Inpatient_2
+UC_Inpatient <include> UC_Inpatient_3
+UC_Inpatient <include> UC_Inpatient_4
+UC_Inpatient <include> UC_Inpatient_5
+
+UC_Outpatient <include> UC_Outpatient_1
+UC_Outpatient <include> UC_Outpatient_2
+UC_Outpatient <include> UC_Outpatient_3
+UC_Outpatient <include> UC_Outpatient_4
+
+UC_Appointment <include> UC_Appointment_1
+UC_Appointment <extend> UC_Appointment_2
+UC_Appointment <extend> UC_Appointment_3
+UC_Appointment <extend> UC_Appointment_4
+
+@enduml
